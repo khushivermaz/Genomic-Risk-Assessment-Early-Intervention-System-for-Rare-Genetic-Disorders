@@ -1,1 +1,159 @@
 
+🧬 Genetic Disorder Prediction using Machine Learning
+A multi-class classification pipeline that predicts genetic disorder categories from patient clinical data — built with TensorFlow/Keras and scikit-learn.
+![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange?logo=tensorflow&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-latest-blue?logo=scikit-learn&logoColor=white)
+![Accuracy](https://img.shields.io/badge/Accuracy-90%25-brightgreen)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
+---
+📌 Overview
+This project builds an end-to-end ML pipeline to classify patients into one of three genetic disorder categories based on clinical features such as symptoms, blood test results, parental gene information, and medical history.
+Target classes:
+`0` — Mitochondrial genetic inheritance disorders
+`1` — Multifactorial genetic inheritance disorders
+`2` — Single-gene inheritance diseases
+---
+📊 Dataset
+Property	Value
+Total records	22,083 patients
+Raw features	45 columns
+Features after preprocessing	38
+Train / Test split	80% / 20%
+Key features used:
+Patient age, gender, symptoms (1–5)
+Blood cell count, white blood cell count
+Blood test results
+Maternal/paternal gene presence
+Family history, birth defects, IVF history
+Respiratory rate, heart rate
+---
+🏗️ Project Structure
+```
+genetic-disorder-prediction/
+│
+├── Code.ipynb                        # Main notebook (EDA + training + evaluation)
+├── Genetic_Disorders.csv             # Dataset
+├── genetic_disorder_model.h5         # Saved Keras model
+├── confusion_matrix_heatmap.png      # Output plot
+├── requirements.txt
+└── README.md
+```
+---
+⚙️ Pipeline
+```
+Raw CSV
+   │
+   ▼
+Data Cleaning & Imputation
+   │
+   ▼
+Exploratory Data Analysis
+(correlation heatmap, count plots, scatter plots, box plots)
+   │
+   ▼
+Feature Engineering
+(Ordinal Encoding + One-Hot Encoding)
+   │
+   ▼
+Train / Test Split (80/20)
+   │
+   ▼
+Model Training
+├── Deep Neural Network (TensorFlow/Keras)
+├── Support Vector Machine (SVM)
+└── Bagging Classifier Ensemble (sklearn)
+   │
+   ▼
+Evaluation
+(Classification Report, Confusion Matrix)
+   │
+   ▼
+Model Saved → genetic_disorder_model.h5
+```
+---
+🤖 Models
+1. Deep Neural Network (TensorFlow / Keras)
+```
+Input → Flatten(37)
+Dense(100, ReLU) → Dense(100, ReLU)
+Dense(100, ReLU) → Dense(100, ReLU)
+Output → Dense(3, Softmax)
+
+Total params: 34,405
+Epochs: 10
+```
+2. Support Vector Machine (SVM)
+Kernel: RBF
+Used as a baseline comparator
+3. Bagging Classifier Ensemble (sklearn)
+Base estimator: Decision Tree
+Bootstrap sampling enabled
+---
+📈 Results
+Classification Report (Neural Network — Test Set)
+Class	Precision	Recall	F1-Score	Support
+0 — Mitochondrial	0.93	0.89	0.91	2470
+1 — Multifactorial	0.86	0.91	0.88	414
+2 — Single-gene	0.86	0.90	0.88	1533
+Weighted avg	0.90	0.90	0.90	4417
+Overall Accuracy: 90%
+---
+🖼️ Visualizations
+Graph	Description
+Correlation Heatmap	Feature correlations with the target variable
+Class Distribution	Shows class imbalance across disorder types
+Training Curves	Loss and accuracy over 10 epochs
+Confusion Matrix (Test)	Prediction breakdown on unseen data
+Confusion Matrix (Bagging)	Ensemble model comparison
+---
+🚀 Getting Started
+1. Clone the repository
+```bash
+git clone https://github.com/your-username/genetic-disorder-prediction.git
+cd genetic-disorder-prediction
+```
+2. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+3. Run the notebook
+```bash
+jupyter notebook Code.ipynb
+```
+---
+📦 Requirements
+```
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+tensorflow
+jupyter
+```
+Or install all at once:
+```bash
+pip install numpy pandas matplotlib seaborn scikit-learn tensorflow jupyter
+```
+---
+🔑 Key Challenges
+Class imbalance — Mitochondrial class had 6× more samples than Multifactorial. Handled through careful evaluation metrics (macro F1) rather than just accuracy.
+Missing values — Multiple clinical features had NaN entries across thousands of rows, requiring strategic imputation.
+Mixed categorical data — 28+ categorical features required both ordinal and one-hot encoding strategies depending on variable type.
+---
+🔮 Future Work
+[ ] Add SMOTE or class-weight balancing to address imbalance more aggressively
+[ ] Hyperparameter tuning with Keras Tuner or Optuna
+[ ] Build a prediction UI (Streamlit or Gradio) around the saved model
+[ ] Extend to predict `Disorder Subclass` (finer-grained classification)
+[ ] Experiment with XGBoost and LightGBM for comparison
+---
+📄 License
+This project is licensed under the MIT License — see the LICENSE file for details.
+---
+🙋 Author
+Khushi Verma
+LinkedIn · https://www.linkedin.com/in/khushivermaz/
+---
+> ⭐ If you found this useful, please consider giving it a star!
